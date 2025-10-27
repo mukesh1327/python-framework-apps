@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-helloworld-app
+  labels:
+    app: fastapi-helloworld-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi-helloworld-app
+  template:
+    metadata:
+      labels:
+        app: fastapi-helloworld-app
+    spec:
+      containers:
+        - name: fastapi-helloworld-app
+          image: quay.io/myapp/fastapi-helloworld:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DISPLAY_TEXT
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-helloworld-config
+                  key: DISPLAY_TEXT
+            - name: IMAGE_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-helloworld-config
+                  key: IMAGE_PATH
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20

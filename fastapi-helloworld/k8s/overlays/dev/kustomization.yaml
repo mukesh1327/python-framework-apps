@@ -1,0 +1,16 @@
+namespace: demo-apps
+resources:
+  - ../../base
+
+images:
+  - name: image-registry.openshift-image-registry.svc:5000/your-namespace/fastapi-app
+    newTag: dev-latest
+
+commonLabels:
+  environment: dev
+
+configMapGenerator:
+  - name: fastapi-helloworld-config
+    literals:
+      - DISPLAY_TEXT="Hello from Dev Environment!"
+      - IMAGE_PATH="/app/rh-developer.jpg"

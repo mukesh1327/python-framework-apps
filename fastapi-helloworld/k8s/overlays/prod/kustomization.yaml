@@ -1,0 +1,15 @@
+namespace: fastapi-prod
+resources:
+  - ../../base
+
+images:
+  - name: image-registry.openshift-image-registry.svc:5000/your-namespace/fastapi-app
+    newTag: prod-latest
+
+commonLabels:
+  environment: prod
+
+configMapGenerator:
+  - name: fastapi-config
+    literals:
+      - DISPLAY_TEXT="Hello from Production!"
