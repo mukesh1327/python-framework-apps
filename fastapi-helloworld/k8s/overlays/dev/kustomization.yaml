@@ -1,10 +1,11 @@
-namespace: demo-apps
+# namespace: demo-apps
 resources:
   - ../../base
+  - route.yaml
 
 images:
-  - name: image-registry.openshift-image-registry.svc:5000/your-namespace/fastapi-app
-    newTag: dev-latest
+  - name: quay.io/mukeshs1306/py-fastapi-helloworld
+    newTag: latest
 
 commonLabels:
   environment: dev
@@ -14,3 +15,6 @@ configMapGenerator:
     literals:
       - DISPLAY_TEXT="Hello from Dev Environment!"
       - IMAGE_PATH="/app/rh-developer.jpg"
+
+generatorOptions:
+  disableNameSuffixHash: true

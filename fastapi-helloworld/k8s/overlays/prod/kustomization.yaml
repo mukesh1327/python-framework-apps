@@ -1,15 +1,20 @@
-namespace: fastapi-prod
+# namespace: fastapi-prod
 resources:
   - ../../base
+  - route.yaml
 
 images:
-  - name: image-registry.openshift-image-registry.svc:5000/your-namespace/fastapi-app
-    newTag: prod-latest
+  - name: quay.io/mukeshs1306/py-fastapi-helloworld
+    newTag: latest
 
 commonLabels:
   environment: prod
 
 configMapGenerator:
-  - name: fastapi-config
+  - name: fastapi-helloworld-config
     literals:
       - DISPLAY_TEXT="Hello from Production!"
+      - IMAGE_PATH="/app/rh-developer.jpg"
+
+generatorOptions:
+  disableNameSuffixHash: true
